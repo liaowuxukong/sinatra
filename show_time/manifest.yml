@@ -1,0 +1,8 @@
+---
+applications:
+- name: showtime
+  memory: 256M
+  instances: 1
+  host: showtime
+  domain: dc.escience.cn
+  path: .
