@@ -1,9 +1,11 @@
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+
 require "rubygems"
 require "sinatra"
-require "net/http"
+require "api_bus"
 
 get '/' do 
-    uri = "http://showtime.dc.escience.cn/"
-    resp = Net::HTTP.get_response(URI.parse(uri))
-    resp.body
+    api = APIBus.new
+    result = api.get_service(:get_time)
+    result
 end
