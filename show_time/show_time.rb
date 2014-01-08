@@ -1,6 +1,11 @@
 
 require "sinatra"
 
-get '/' do 
-    "#{Time.now}"
+get '/times' do 
+  "#{Time.now}"
 end
+
+get '/' do
+  "#{Time.now}"
+end
+
