@@ -6,6 +6,6 @@ require "lib/apibus"
 
 get '/' do 
     api = APIBus.new
-    result = api.get_service(:showtime)
+    result = api.get_service(:showtime,:index,:times)
     result
 end
