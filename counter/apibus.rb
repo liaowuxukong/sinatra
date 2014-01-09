@@ -55,5 +55,5 @@ class APIBus
 end
 
 apibus = APIBus.new
-puts apibus.get_service("",:update,:counters,"hello")
+puts apibus.get_service("",:update,:counters,"hello",{value:2})
 

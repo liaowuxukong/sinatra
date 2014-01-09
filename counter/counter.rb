@@ -2,46 +2,111 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require "rubygems"
 require "sinatra"
+require "json"
 
-@counters = {}
+enable :sessions
+
+before do
+  
+  puts "$counters = #{$counters}"
+  $counters = {} unless  $counters
+  @return_value = {} unless @return_value
+
+end
+
+after do
+
+end
+
 
 get '/' do 
-  "index"
+  @return_value[:status] = "success"
+  @return_value[:value] = $counters
+  @return_value.to_json
 end
 
 # index
 get '/counters' do
-  "index"
+  @return_value[:status] = "success"
+  @return_value[:value] = $counters
+  @return_value.to_json
 end
 
 # show
 get '/counters/:id' do
   @id = params[:id]
-  "show" + @id.to_s
+  if $counters[@id]
+    @return_value[:status] = "success"
+    @return_value[:value] = {"#{@id}"=>$counters[@id]}
+  else
+    @return_value[:status] = "fail"
+    @return_value[:info] = "counter name error"
+  end
+  @return_value.to_json
+
 end
 
 #create
-post '/counters/new' do
-  "create"
+post '/counters' do
+  name = params[:name]
+  if $counters[name]
+    @return_value[:status] = "fail"
+    @return_value[:info] = "exist"
+  else
+    $counters[name] = 0
+    @return_value[:status] = "success"
+    @return_value[:value] = {"#{name}" => 0}
+  end
+  @return_value.to_json
 end
 
 # edit
 get '/counters/:id/edit' do
-  @id = params[:id]
-  "edit" + @id.to_s
+  @return_value[:status] = "fail"
+  @return_value[:info] = "function error"  
+  @return_value.to_json
 end
  
 # update / delete
 post '/counters/:id' do
-  @id = params[:id]
-  @method = params[:method]
-  if @method == "put"
-    "update" + @id.to_s
-  elsif @method == "delete"
-    "delete" + @id.to_s
+  method = params[:method]
+  if method == "put"
+    update(params)
+  elsif method == "delete"
+    delete(params)
+  else
+    @return_value[:status] = "fail"
+    @return_value[:info] = "params error"
+    @return_value.to_json
   end
     
 end
 
+def update(params)
+  name = params[:id]
+  new_value = params[:value]
+  if $counters[name]
+    $counters[name] = new_value.to_i
+    @return_value[:status] = "success"
+    @return_value[:value] = {"#{name}" => new_value.to_i}
+  else
+    @return_value[:status] = "fail"
+    @return_value[:info] = "counter name error"
+  end
+  @return_value.to_json
+end
+
+def delete(params)
+  name = params[:id]
+  if $counters[name]
+    $counters.delete(:name)
+    @return_value[:status] = "success"
+  else
+    @return_value[:status] = "fail"
+    @return_value[:info] = "counter name error"
+  end
+  @return_value.to_json
+
+end
 
 
