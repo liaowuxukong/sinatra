@@ -1,0 +1,8 @@
+---
+applications:
+- name: weather
+  memory: 256M
+  instances: 1
+  host: weather
+  domain: dc.escience.cn
+  path: .

@@ -1,5 +1,6 @@
 require "net/http"
 require 'yaml' 
+require 'json'
 
 class APIBus
 
@@ -10,7 +11,7 @@ class APIBus
   def get_service(name,action,resource,id='',params={})
     #domain = @service_uris[name.to_sym] || @service_uris[name.to_s]
     #puts "domain = #{domain}"
-    domain = "http://localhost:4567"
+    domain = "http://counter.dc.escience.cn"
     action = action.to_sym
     resource = resource.to_sym
     trans_method = 
@@ -54,7 +55,10 @@ class APIBus
 
 end
 
-apibus = APIBus.new
-#puts apibus.get_service("",:create,:counters,"hello",{name:"hello"})
-puts apibus.get_service("",:update,:counters,"hello")
-
+=begin
+api = APIBus.new
+return_value = api.get_service(:counter,:update,:counters,"hello")
+#return_value = api.get_service(:counter,:create,:counters,"hello",{name:"hello"})
+return_hash = JSON.parse(return_value)
+puts return_hash["value"]
+=end

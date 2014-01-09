@@ -86,9 +86,13 @@ def update(params)
   name = params[:id]
   new_value = params[:value]
   if $counters[name]
-    $counters[name] = new_value.to_i
+    if new_value
+      $counters[name] = new_value.to_i
+    else
+      $counters[name] = $counters[name] + 1
+    end
     @return_value[:status] = "success"
-    @return_value[:value] = {"#{name}" => new_value.to_i}
+    @return_value[:value] = {"#{name}" => "#{$counters[name]}"}
   else
     @return_value[:status] = "fail"
     @return_value[:info] = "counter name error"
