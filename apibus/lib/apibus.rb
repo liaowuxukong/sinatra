@@ -1,17 +1,17 @@
 require "net/http"
 require 'yaml' 
-require 'json'
 
 class APIBus
 
   # 从文件中读取，建立hash表
   def initialize
+    yaml_file = File.expand_path(File.join(File.dirname(__FILE__), "service_map.yaml"))
+    @service_uris = YAML::load(File.open(yaml_file))
   end
 
-  def get_service(name,action,resource,id='',params={})
-    #domain = @service_uris[name.to_sym] || @service_uris[name.to_s]
+  def get_service(name,action,resource,id=0,params={})
+    domain = @service_uris[name.to_sym] || @service_uris[name.to_s]
     #puts "domain = #{domain}"
-    domain = "http://counter.dc.escience.cn"
     action = action.to_sym
     resource = resource.to_sym
     trans_method = 
@@ -54,11 +54,4 @@ class APIBus
   end
 
 end
-
-
-api = APIBus.new
-return_value = api.get_service(:counter,:delete,:counters,"world1")
-#return_value = api.get_service(:counter,:create,:counters,"hello",{name:"hello"})
-#return_hash = JSON.parse(return_value)
-puts return_value
 

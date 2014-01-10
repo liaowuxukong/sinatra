@@ -1,0 +1,8 @@
+---
+applications:
+- name: apibus
+  memory: 256M
+  instances: 1
+  host: apibus
+  domain: dc.escience.cn
+  path: .
