@@ -1,0 +1,8 @@
+---
+applications:
+- name: conmysql
+  memory: 256M
+  instances: 1
+  host: conmysql
+  domain: dc.escience.cn
+  path: .
