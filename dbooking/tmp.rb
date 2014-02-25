@@ -13,5 +13,5 @@ end
 start_time = Time.mktime(2014,2,25,16,00)
 end_time = Time.mktime(2014,2,25,17)
 
-result,msg = people.booking("102",start_time,end_time)
+result,msg = people.cancel_booking("102",start_time,end_time)
 puts msg

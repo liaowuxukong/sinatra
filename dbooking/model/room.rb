@@ -41,8 +41,19 @@ class Room
     end
   end
 
+
+  # 1. 改时间段的订阅人
+  # 2. 如果不是本人，则无法取消
+  # 3. 如果是本人，则取消
   def cancel_booking(people,time_quota)
-    
+    result,people_email = self.class.find_people_by_room_time(self.number,
+                                                              time_quota.start_time,
+                                                              time_quota.end_time)
+    return [false,people_email] unless result
+    return [false,"privilege error"] if people.email != people_email
+    result,msg = self.class.delete(people.email,self.number,time_quota.start_time,time_quota.end_time)
+    return [false,msg] unless result
+    [true,"cancel success"]
   end
 
   # 预订返回true,否则返回false

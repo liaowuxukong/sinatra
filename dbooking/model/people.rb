@@ -42,7 +42,9 @@ class People
   end
 
   def cancel_booking(room_number,start_time,end_time)
-    room = Room.find_by_number(room_number)
+    result,room = Room.find_by_number(room_number)
+    return [false,room] unless result
+    room.cancel_booking(self,TimeQuota.new(start_time,end_time))
   end
 
 end

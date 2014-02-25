@@ -9,7 +9,19 @@ module DBOOKING::PeopleRoomTimeDAO
   include DBOOKING::DBHelp
 
   def find_people_by_room_time(room_number,start_time,end_time)
+    sql_query = "select * from rooms_time_people where "+
+                "room_number=\"#{room_number}\" and "+
+                "start_time = \"#{start_time.to_s}\" and "+
+                "end_time = \"#{end_time.to_s}\";"
     
+    result,msg = exec_select(sql_query,"select success")
+    return [false,msg] unless result
+    return [false,"not found anything"] if result.count == 0
+    people_email = ""
+    result.each do |row|
+      people_email = row["people_email"]
+    end
+    [true,people_email]
   end
 
   def find_room_by_people_time(email,start_time,end_time)
@@ -43,6 +55,17 @@ module DBOOKING::PeopleRoomTimeDAO
                 "\"#{start_time}\",\"#{end_time}\");"
     exec_proc(sql_query,"insert success")
   end
+
+  def delete(people_email,room_number,start_time,end_time)
+    sql_query = "delete from rooms_time_people where "+
+                "people_email=\"#{people_email}\" and "+
+                "room_number=\"#{room_number}\" and "+
+                "start_time=\"#{start_time}\" and "+
+                "end_time=\"#{end_time}\";"
+    
+    exec_proc(sql_query,"delete success")
+  end
+
 
 
 end
