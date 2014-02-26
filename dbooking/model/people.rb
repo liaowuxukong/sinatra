@@ -60,6 +60,11 @@ class People
     unbooking_rooms_list
   end
 
+  # 显示所有会议室
+  def find_all_rooms
+    Room.all
+  end
+
 end
 
 =begin

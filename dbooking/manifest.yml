@@ -1,8 +1,8 @@
 ---
 applications:
-- name: conmysql
+- name: dbooking
   memory: 256M
   instances: 1
-  host: conmysql
+  host: dbooking
   domain: dc.escience.cn
   path: .
