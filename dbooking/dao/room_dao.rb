@@ -32,13 +32,28 @@ module DBOOKING::RoomDAO
     sql_query = "select * from rooms where number = \"#{number}\";"
     result,msg = exec_select(sql_query,"select success")
     return [false,msg] unless result
-    return [false,"not found room #{number}"] if result.count == 0
+    return [false,"not find room #{number}"] if result.count == 0
     number = description = ""
     result.each do |row|
       number =  row["number"]
       description = row["description"]
     end
     [true,Room.new(number,description)]
+  end
+
+  def all
+    sql_query = "select  * from rooms;"
+    result,msg = exec_select(sql_query,"select success")
+    return [false,msg] unless result
+    return [false,"not find any room"] if result.count == 0    
+
+    rooms_list = []
+    result.each do |row|
+      number =  row["number"]
+      description = row["description"]
+      rooms_list << Room.new(number,description)
+    end
+    [true, rooms_list]
   end
 
 end

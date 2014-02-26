@@ -32,12 +32,25 @@ module DBOOKING::PeopleDAO
       sql_query = "select * from people where email = \"#{email}\";"
       result,msg = exec_select(sql_query,"select success")
       return [false,msg] unless result
-      return [false,"not found people #{email}"] if result.count == 0
+      return [false,"not find people #{email}"] if result.count == 0
       email = ""
       result.each do |row|
         email =  row["email"]
       end
       [true,People.new(email)]
+    end
+
+    def all
+      sql_query = "select * from people;"
+      result,msg = exec_select(sql_query,"select success")
+      return [false,msg] unless result
+      return [false,"not find any people"] if result.count == 0
+      people_list = []
+      result.each do |row|
+        email = row["email"]
+        people_list << People.new(email)
+      end
+      [true,people_list]
     end
 
 end

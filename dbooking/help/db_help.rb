@@ -8,9 +8,9 @@ module DBOOKING
 
     def get_client
       client = Mysql2::Client.new(
-        host: "127.0.0.1",
+        host: "10.10.1.159",
         username: 'root',
-        password: 'xx881105',
+        password: '',
         database: 'dbooking',
         port: 3306
       )
