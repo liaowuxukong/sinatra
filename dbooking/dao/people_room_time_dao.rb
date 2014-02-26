@@ -42,7 +42,6 @@ module DBOOKING::PeopleRoomTimeDAO
     sql_query = "select * from rooms_time_people where room_number=\"#{room_number}\";"
     result,msg = exec_select(sql_query,"select success")
     return [false,msg] unless result
-    return [false,"not found anything"] if result.count == 0
     booking_hash = {}
 
     result.each do |row|

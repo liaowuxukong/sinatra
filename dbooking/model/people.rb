@@ -41,10 +41,23 @@ class People
     room.booking(self,TimeQuota.new(start_time,end_time))
   end
 
+  # 2. 如果不是本人，则无法取消
+  # 3. 如果是本人，则取消
   def cancel_booking(room_number,start_time,end_time)
     result,room = Room.find_by_number(room_number)
     return [false,room] unless result
     room.cancel_booking(self,TimeQuota.new(start_time,end_time))
+  end
+
+  # 寻找某个时间段内没有预订的房间
+  def find_unbooking_room(start_time,end_time)
+    unbooking_rooms_list = []
+    result,rooms_list = Room.all
+    rooms_list.each do |room|
+      isbooking,msg =  room.booking?(TimeQuota.new(start_time,end_time))
+      unbooking_rooms_list << room unless isbooking
+    end
+    unbooking_rooms_list
   end
 
 end

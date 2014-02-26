@@ -31,7 +31,7 @@ class Room
   end
 
   def booking(people,new_quota)
-    isbooking,msg = booking?(people,new_quota)
+    isbooking,msg = booking?(new_quota)
     return [false,msg] if isbooking
     result,msg = booking_room(people,new_quota)
     if result
@@ -42,7 +42,7 @@ class Room
   end
 
 
-  # 1. 改时间段的订阅人
+  # 1. 该房间该时间段的订阅人
   # 2. 如果不是本人，则无法取消
   # 3. 如果是本人，则取消
   def cancel_booking(people,time_quota)
@@ -57,7 +57,7 @@ class Room
   end
 
   # 预订返回true,否则返回false
-  def booking?(people,new_quota)
+  def booking?(new_quota)
     valid,people_email,time_quota = valid?(new_quota)
     # 时间合法，说明没有被预订
     if valid
@@ -73,6 +73,7 @@ class Room
     # 非法返回 false,冲突人，冲突时间
     def valid?(new_quota)
       result,booking_hash = Room.find_all_by_room(self.number)
+      return [false,booking_hash] unless result
       #puts "number = #{self.number},booking_hash = #{booking_hash.inspect}"
       booking_hash.each do |people_email,time_quota_list|
         #puts "time_quota_list = #{time_quota_list}"
