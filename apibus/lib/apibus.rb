@@ -40,8 +40,17 @@ class APIBus
       else
         ""
       end
-    puts "uri = #{uri}"
+
+    if trans_method == :get && params.count != 0
     
+      uri = uri + '?'
+      params.each do |key,value|
+        uri += key.to_s+"="+value.to_s+"&"
+      end
+      uri = uri.chop
+    end
+    puts "uri = #{uri}"
+
     uri = URI.parse(uri)
     resp = 
       case trans_method
@@ -51,7 +60,11 @@ class APIBus
         Net::HTTP.post_form(uri,params)
       end
     resp.body
-  end
 
+  end
 end
 
+=begin
+apibus = APIBus.new
+apibus.get_service(:dbooking,:index,:rooms,0,{start_time:"10:10",end_time:"11:30"})
+=end
