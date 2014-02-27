@@ -10,7 +10,7 @@ require "model/time_quota"
 # index
 get '/:resource' do 
   resource = params[:resource]
-  if resource == "rooms"
+  if resource == "rooms_time"
     rooms_index(params)
   else
     "resource error"

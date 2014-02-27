@@ -1,5 +1,5 @@
-
-require 'mysql2'
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+require "db_help.rb"
 
 
 client = Mysql2::Client.new(

@@ -6,6 +6,10 @@ require "lib/apibus"
 
 
 post '/' do 
+  # 传来的内容就是params，如果除了name,action,resource,id之外，还有params，就是剩下的真正的params
+  # params = {name_19900101:"dbooking",action_19900101:"index",
+  #        resource_19900101:"rooms",id_19900101:"",
+  #        people_email:"xuxin@cstnet.cn"}
   name = params.delete("name_19900101")
   action = params.delete("action_19900101")
   resource = params.delete("resource_19900101")

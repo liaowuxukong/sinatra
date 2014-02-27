@@ -46,7 +46,7 @@ puts resp.body
 uri = "http://apibus.dc.escience.cn/"
 params = {name_19900101:"dbooking",action_19900101:"create",
           resource_19900101:"rooms_time",id_19900101:"",
-          people_email:"xuxin@cstnet.cn",
+          people_email:"wangqiao@cstnet.cn",
           room_number:"102",
           start_time:"2014_2_25_16_0",
           end_time:"2014_2_25_18_0"}

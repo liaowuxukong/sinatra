@@ -3,6 +3,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require "rubygems"
 require "sinatra"
 require 'mysql2'
+require 'db_help'
 
 before do
   client = Mysql2::Client.new(
