@@ -1,12 +1,13 @@
-require "json"
+require "net/http"
 
+uri = "http://127.0.0.1:4567"
+params = {
+          name_19900101:"dbooking",
+          action_19900101:"index",
+          resource_19900101:"rooms_time",
+          people_email:"liwei@cstnet.cn",
+          id_19900101:""}
+uri = URI.parse(uri)
+resp = Net::HTTP.post_form(uri,params)
 
-hash = {}
-
-hash["name"] = "name_"
-hash["action"] = "action_"
-hash["resource"] = "resource_"
-
-p hash
-puts hash.delete("name")
-p hash
+puts resp.body

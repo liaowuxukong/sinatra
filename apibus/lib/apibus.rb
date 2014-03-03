@@ -1,17 +1,28 @@
+root_path = File.join(File.dirname(__FILE__), "..")
+$LOAD_PATH.unshift(root_path) unless $LOAD_PATH.include?(root_path)
+
 require "net/http"
 require 'yaml' 
+require 'lib/db_helper'
 
 class APIBus
-
+  include DBHelp
   # 从文件中读取，建立hash表
   def initialize
-    yaml_file = File.expand_path(File.join(File.dirname(__FILE__), "service_map.yaml"))
-    @service_uris = YAML::load(File.open(yaml_file))
+    #yaml_file = File.expand_path(File.join(File.dirname(__FILE__), "service_map.yaml"))
+    #@service_uris = YAML::load(File.open(yaml_file))
   end
 
   def get_service(name,action,resource,id=0,params={})
-    domain = @service_uris[name.to_sym] || @service_uris[name.to_s]
-    #puts "domain = #{domain}"
+    sql_query = "select * from name_url where name=\"#{name}\";"
+    result,msg = exec_select(sql_query,"select success")
+    url = ""
+    result.each do |row|
+      url = row["url"]
+    end    
+    domain = url
+
+    puts "domain = #{domain}"
     action = action.to_sym
     resource = resource.to_sym
     trans_method = 
