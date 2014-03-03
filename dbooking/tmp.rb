@@ -6,10 +6,10 @@ require "net/http"
 
 
 result,people = People.find_by_email("xuxin@cstnet.cn")
-unless result
-  puts people
-  return
-end
+
+
+
+
 =begin
 
 start_time = Time.mktime(2014,2,25,16,00)
@@ -43,6 +43,7 @@ resp = Net::HTTP.post_form(uri,params)
 puts resp.body
 =end
 
+=begin
 uri = "http://apibus.dc.escience.cn/"
 params = {name_19900101:"dbooking",action_19900101:"create",
           resource_19900101:"rooms_time",id_19900101:"",
@@ -55,21 +56,21 @@ resp = Net::HTTP.post_form(uri,params)
 
 puts resp.body
 
+=end
 
 
 
-=begin
 uri = "http://127.0.0.1:4567/rooms_time/0"
 params = {method:"delete",
-          people_email:"xuxin@cstnet.cn",
+          people_email:"liwei@cstnet.cn",
           room_number:"102",
-          start_time:"2014_2_25_16_0",
-          end_time:"2014_2_25_17_0"}
+          start_time:"2014_2_25_16_00",
+          end_time:"2014_2_25_18_00"}
 uri = URI.parse(uri)
 resp = Net::HTTP.post_form(uri,params)
 
 puts resp.body
-=end
+
 
 
 

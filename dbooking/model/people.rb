@@ -35,6 +35,7 @@ class People
     email
   end
 
+  # 订会议室
   def booking(room_number,start_time,end_time)
     result,room = Room.find_by_number(room_number)
     return [false,room] unless result
@@ -53,17 +54,20 @@ class People
   def find_unbooking_room(start_time,end_time)
     unbooking_rooms_list = []
     result,rooms_list = Room.all
+    return result,rooms_list unless result
     rooms_list.each do |room|
       isbooking,msg =  room.booking?(TimeQuota.new(start_time,end_time))
       unbooking_rooms_list << room unless isbooking
     end
-    unbooking_rooms_list
+    [true,unbooking_rooms_list]
   end
 
   # 显示所有会议室
   def find_all_rooms
     Room.all
   end
+
+
 
 end
 

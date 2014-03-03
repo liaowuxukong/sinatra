@@ -19,8 +19,8 @@ module DBOOKING::PeopleRoomTimeDAO
                 "end_time = \"#{end_time.to_s}\";"
     
     result,msg = exec_select(sql_query,"select success")
-    return [false,msg] unless result
-    return [false,"not found anything"] if result.count == 0
+    return [false,"state_code:31,msg:#{msg}"] unless result
+    return [false,"state_code:32,msg:not found anything"] if result.count == 0
     people_email = ""
     result.each do |row|
       people_email = row["people_email"]
@@ -41,9 +41,9 @@ module DBOOKING::PeopleRoomTimeDAO
   def find_all_by_room(room_number)
     sql_query = "select * from rooms_time_people where room_number=\"#{room_number}\";"
     result,msg = exec_select(sql_query,"select success")
-    return [false,msg] unless result
-    booking_hash = {}
+    return [false,"state_code:31,msg:#{msg}"] unless result
 
+    booking_hash = {}
     result.each do |row|
       people_email = row["people_email"]
       time_quota_list = booking_hash[people_email] || Array.new

@@ -35,7 +35,7 @@ class Room
     return [false,msg] if isbooking
     result,msg = booking_room(people,new_quota)
     if result
-      [true,"booking success"]
+      [true,"state_code:0,msg:booking success"]
     else
       [false,msg]
     end
@@ -50,10 +50,10 @@ class Room
                                                               time_quota.start_time,
                                                               time_quota.end_time)
     return [false,people_email] unless result
-    return [false,"privilege error"] if people.email != people_email
+    return [false,"state_code:23,msg:privilege error"] if people.email != people_email
     result,msg = self.class.delete(people.email,self.number,time_quota.start_time,time_quota.end_time)
     return [false,msg] unless result
-    [true,"cancel success"]
+    [true,"state_code:0,msg:cancel success"]
   end
 
   # 预订返回true,否则返回false
@@ -64,7 +64,7 @@ class Room
       [false,""]
     else
       msg = "#{people_email} is booking, from #{time_quota.start_time} to #{time_quota.end_time}"
-      [true,msg]
+      [true,"state_code:24,msg:#{msg}"]
     end
   end
 
@@ -88,7 +88,8 @@ class Room
     def booking_room(people,new_quota)
       result,msg = self.class.insert_people_room_time(people.email,self.number,
                                          new_quota.start_time,new_quota.end_time)
-      [result,msg]
+      [false,"state_code:31,msg:#{msg}"] unless result
+      [true,"#{msg}"]
     end
 
 

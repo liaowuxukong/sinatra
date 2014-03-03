@@ -17,7 +17,7 @@ module DBOOKING
       client
     end
 
-    def exec_select(sql_query,success_message)
+    def exec_select(sql_query,success_message="")
       begin
         result = get_client.query(sql_query)
         [result,success_message]
@@ -26,7 +26,7 @@ module DBOOKING
       end
     end
 
-    def exec_proc(sql_query,success_message)
+    def exec_proc(sql_query,success_message="")
       begin
         get_client.query(sql_query)
         [true,success_message]
