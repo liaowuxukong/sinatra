@@ -1,0 +1,19 @@
+---
+appname: dbooking
+category: dbooking
+function:
+- name: 查询会议室
+  params: dbooking, index, rooms_time, null, {"people_email"=>"","start_time"=>"",end_time=>""}
+  info: 函数作用为查询会议室，参数dbooking, index, rooms_time, null为固定参数，people_email需要对应查询人的email，start_time和end_time对应的查询开始时间和结束时间
+  return: 返回为json格式，state_code:number,msg:"msg",number为返回代码,msg为消息, number对应于11, 21, 31 -> 数据库错误，12 -> 数据库中没有这个人
+  example: 查询2014年4月10日下午3点到5点的房间，apibus.get_service("dbooking","index","rooms_time",null,{"people_email"=>"xuxin@cstnet.cn","start_time"=>"201404101500","end_time"=>"201404101700"})
+- name: 订阅会议室
+  params: dbooking, create, rooms_time, null, {"people_email"=>"","start_time"=>"",end_time=>"","room_number"=>""}
+  info: 订阅会议室。参数dbooking, create, rooms_time, null为固定参数，room_number为需要订阅的房间号
+  return: 返回为json格式，state_code:number,msg:"msg",number为返回代码,msg为消息。
+  example: get_service("dbooking","create","rooms_time",null,{"people_email"=>"xuxin@cstnet.cn","start_time"=>"201404101500","end_time"=>"201404101700","room_number"=>"101"})
+- name: 取消订阅
+  params: dbooking, delete, rooms_time, null, {"people_email"=>"","start_time"=>"",end_time=>"","room_number"=>""}
+  info: 取消订阅会议室。参数dbooking, create, rooms_time, null为固定参数，room_number为需要订阅的房间号
+  return: 返回为json格式，state_code:number,msg:"msg",number为返回代码,msg为消息。
+  example: get_service("dbooking","delete","rooms_time",null,{"people_email"=>"xuxin@cstnet.cn","start_time"=>"201404101500","end_time"=>"201404101700","room_number"=>"101"})
