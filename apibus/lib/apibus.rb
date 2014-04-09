@@ -20,7 +20,7 @@ class APIBus
     result.each do |row|
       url = row["url"]
     end    
-    domain = url
+    domain = url.strip
 
     puts "domain = #{domain}"
     action = action.to_sym
