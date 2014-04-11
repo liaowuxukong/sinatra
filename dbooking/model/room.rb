@@ -63,7 +63,7 @@ class Room
     if valid
       [false,""]
     else
-      msg = "#{people_email} is booking, from #{time_quota.start_time} to #{time_quota.end_time}"
+      msg = "#{people_email},#{time_quota.start_time},#{time_quota.end_time}"
       [true,"state_code:24,msg:#{msg}"]
     end
   end
