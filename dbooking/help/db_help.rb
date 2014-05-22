@@ -19,20 +19,26 @@ module DBOOKING
 
     def exec_select(sql_query,success_message="")
       begin
-        result = get_client.query(sql_query)
+        client = get_client
+        result = client.query(sql_query)
         [result,success_message]
       rescue Mysql2::Error=>e
         [false,e]
+      ensure
+        client.close
       end
     end
 
     def exec_proc(sql_query,success_message="")
       begin
-        get_client.query(sql_query)
+        client = get_client
+        client.query(sql_query)
         [true,success_message]
       rescue Mysql2::Error=>e
         [false,e]
-      end      
+      ensure
+        client.close
+      end
     end
   end
 end
